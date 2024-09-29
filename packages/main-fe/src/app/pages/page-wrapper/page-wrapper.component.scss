@@ -1,0 +1,6 @@
+:host {
+  display: flex;
+  width: clamp(100%, 100%, 100%);
+  height: clamp(100%, 100%, 100%);
+  overflow: hidden;
+}

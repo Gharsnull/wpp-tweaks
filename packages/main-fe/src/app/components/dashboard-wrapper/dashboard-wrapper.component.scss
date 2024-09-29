@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: clamp(21rem, 28rem, 31.8rem);
+  height: 100%;
+  background-color: #111b21;
+  box-sizing: border-box;
+}

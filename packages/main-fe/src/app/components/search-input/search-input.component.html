@@ -1,0 +1,19 @@
+<div class="search-input">
+  <div #searchField class="search-input_field">
+    <div 
+      #searchToggleIcon 
+      class="search-input_field_icon"
+      (click)="updateFocus(searchInput)"
+    >
+      <mat-icon [svgIcon]="searchFocused() ? 'wpp:left-arrow': 'wpp:search'"></mat-icon>
+    </div>
+    <input 
+      #searchInput
+      matInput
+      class="search-input_field_input"
+      placeholder="Buscar"
+      (focus)="searchFocused.set(true)"
+      (blur)="searchFocused.set(false)"
+    >
+  </div>
+</div>
