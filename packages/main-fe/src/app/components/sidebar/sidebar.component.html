@@ -1,0 +1,48 @@
+<div class="main-list">
+  <button
+    mat-icon-button
+    class="main-list_item action"
+    [ngClass]="{ 'active': currentDashboard() === dashboards.CHAT}"
+    (click)="updateCurrentDashboard(dashboards.CHAT)"
+  >
+    <mat-icon svgIcon="wpp:chat-dashboard" matBadge="48" matBadgePosition="above after" matBadgeSize="large"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="main-list_item action"
+    [ngClass]="{ 'active': currentDashboard() === dashboards.STATUS}"
+    (click)="updateCurrentDashboard(dashboards.STATUS)"
+  >
+    <mat-icon svgIcon="wpp:status-dashboard"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="main-list_item action"
+    [ngClass]="{ 'active': currentDashboard() === dashboards.CHANNEL}"
+    (click)="updateCurrentDashboard(dashboards.CHANNEL)"
+  >
+    <mat-icon svgIcon="wpp:channels-dashboard"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="main-list_item action"
+    [ngClass]="{ 'active': currentDashboard() === dashboards.COMMUNITY}"
+    (click)="updateCurrentDashboard(dashboards.COMMUNITY)"
+  >
+    <mat-icon svgIcon="wpp:communities-dashboard"></mat-icon>
+  </button>
+</div>
+<div class="main-list">
+  <button
+    mat-icon-button
+    class="main-list_item action"
+  >
+    <mat-icon svgIcon="wpp:settings"></mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    class="main-list_item action"
+  >
+    <img alt="" draggable="false" class="profile-picture" tabindex="-1" src="https://media-bog2-1.cdn.whatsapp.net/v/t61.24694-24/405326268_1591901521553578_8753827127220109490_n.jpg?stp=dst-jpg_s96x96&amp;ccb=11-4&amp;oh=01_Q5AaIGvRwzimDr0AdEsEIKkq0PuOetZMxNhDiZzo1Yf5vi9_&amp;oe=66E09FA2&amp;_nc_sid=5e03e0&amp;_nc_cat=101" style="visibility: visible;">
+  </button>
+</div>

@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .filter-options {
+    display: flex;
+
+    mat-button-toggle-group {
+      display: flex;
+      flex: 1;
+      background-color: #26353d;
+      border: none;
+      outline: none;
+
+      .mat-button-toggle {
+        flex: 1;
+        border-left: 1px solid #202c33;
+
+        &-checked {
+          background-color: #002a5a;
+          color: #005cbb;
+        }
+      }
+    }
+  }
+}
