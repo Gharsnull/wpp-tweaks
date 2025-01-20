@@ -23,6 +23,7 @@ jobs:
 
       - name: Debug app.yaml
         run: cat app.yaml
+        working-directory: packages/main-be
       
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
