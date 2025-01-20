@@ -3,7 +3,7 @@ entrypoint: npm run start:prod # Command to start your application
 
 env_variables:
   NODE_ENV: production # Set environment variables
-  SOME_ENV_VARIABLE: value # Add other environment variables as needed
+  LOGGER_PATH: '/tmp/wa-logs.txt'
 
 # Optional: Health check configuration
 health_check:

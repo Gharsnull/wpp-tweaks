@@ -5,6 +5,7 @@ import {
 } from '@whiskeysockets/baileys';
 import * as NodeCache from 'node-cache';
 import P from 'pino';
+import whatsappConfig from '../../config/whatsapp.config';
 
 const _msgRetryCounterCachce = new NodeCache();
 
@@ -13,7 +14,7 @@ export const waLogger = P(
     timestamp: () => `,"time":"${new Date().toJSON()}"`,
     level: 'trace',
   },
-  P.destination('./wa-logs.txt'),
+  P.destination(whatsappConfig.loggerPath),
 );
 
 export const WaClientConfig: Partial<UserFacingSocketConfig> = {
