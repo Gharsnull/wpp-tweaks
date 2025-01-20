@@ -9,6 +9,7 @@ import {
   WaClientConfig,
   waLogger,
 } from '../constants/whatsapp-client.constants';
+import whatsappConfig from '../../config/whatsapp.config';
 
 export class ClientHandler {
   private readonly _logger = waLogger;
@@ -18,7 +19,7 @@ export class ClientHandler {
   constructor(private readonly eventEmitter: EventEmitter2) { }
 
   async createConnection() {
-    const { state, saveCreds } = await useMultiFileAuthState(`baileys_auth_info`);
+    const { state, saveCreds } = await useMultiFileAuthState(whatsappConfig.authPath);
     const { version, isLatest } = await fetchLatestBaileysVersion();
 
     this._logger.info(`Using WA v${version.join('.')} (latest: ${isLatest})`);
