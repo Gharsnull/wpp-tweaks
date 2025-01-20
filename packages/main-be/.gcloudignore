@@ -1,0 +1,21 @@
+# Node modules should not be deployed
+node_modules/
+
+# Compiled output should be included
+!.dist/ # Include dist directory for production build
+dist/
+
+# Environment variables (if locally stored) should not be deployed
+.env
+
+# Logs, caches, and temporary files
+baileys_auth_info/
+baileys_store_multi.json
+wa-logs.txt
+.DS_Store
+
+# Package manager lock files
+package-lock.json # Include only if not required for production
+
+# Git and editor files
+.git/

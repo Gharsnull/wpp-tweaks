@@ -1,0 +1,15 @@
+runtime: nodejs22 # Use the Node.js runtime (adjust based on your needs)
+entrypoint: npm run start:prod # Command to start your application
+
+env_variables:
+  NODE_ENV: production # Set environment variables
+  SOME_ENV_VARIABLE: value # Add other environment variables as needed
+
+# Optional: Health check configuration
+health_check:
+  enable_health_check: true
+
+# Optional: Automatic scaling (default is auto-scaling)
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  target_throughput_utilization: 0.75
