@@ -1,8 +1,5 @@
 runtime: nodejs22 # Use the Node.js runtime (adjust based on your needs)
-entrypoint: npm run start:prod # Command to start your application
-
-env_variables:
-  NODE_ENV: production # Set environment variables
+entrypoint: npm run start:prod # Command to start your application  
 
 # Optional: Health check configuration
 health_check:
