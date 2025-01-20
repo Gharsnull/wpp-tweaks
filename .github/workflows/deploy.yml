@@ -37,6 +37,7 @@ jobs:
           echo "${{ secrets.ENV_PROD_FILE }}" | while IFS='=' read -r key value; do
             echo "  $key: \"$value\"" >> app.yaml
           done
+        working-directory: packages/main-be
 
       - name: Build application
         run: npm run build
