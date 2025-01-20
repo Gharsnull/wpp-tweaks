@@ -31,6 +31,7 @@ jobs:
 
       - name: Set up environment file
         run: echo "${{ secrets.ENV_PROD_FILE }}" > .env
+        working-directory: packages/main-be
 
       - name: Build application
         run: npm run build
