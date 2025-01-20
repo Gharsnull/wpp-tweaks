@@ -5,5 +5,4 @@ baileys_auth_info
 baileys_store_multi.json
 wa-logs.txt
 
-package-lock.json
 .DS_Store
