@@ -25,6 +25,18 @@ jobs:
           done
         working-directory: packages/main-be
 
+      - name: Append environment variables to app.yaml
+        run: |
+          echo "" >> app.yaml
+          echo "env_variables:" >> app.yaml
+          echo "${{ secrets.ENV_PROD_FILE }}" | while IFS='=' read -r key value; do
+            if [[ -n "$key" && -n "$value" ]]; then
+              value=$(echo "$value" | sed 's/"/\\"/g')
+              echo "  $key: \"$value\"" >> app.yaml
+            fi
+          done
+        working-directory: packages/main-be
+
       - name: Debug app.yaml
         run: cat app.yaml
         working-directory: packages/main-be
