@@ -1,0 +1,37 @@
+<div class="filter-options">
+  <mat-button-toggle-group [hideSingleSelectionIndicator]="true" [(ngModel)]="selectedFilter">
+    <mat-button-toggle [value]="filterOptions.ALL">Todos</mat-button-toggle>
+    <mat-button-toggle [value]="filterOptions.UNREAD">No leidos</mat-button-toggle>
+    <mat-button-toggle [value]="filterOptions.GROUPS">Grupos</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="list">
+  @for (chat of chats; track $index) {
+    <div class="list_item">
+      <div class="list_item_avatar">
+        <img [src]="chat.avatar" alt="Avatar">
+        <div class="list_item_avatar_temporal"></div>
+      </div>
+      <div class="list_item_content">
+        <div class="list_item_content_header">
+          <div class="list_item_content_header_community-name">{{chat.communityName}}</div>
+          <div class="list_item_content_header_name">{{ chat.name }}</div>
+          <div class="list_item_content_header_date">{{ chat.date }}</div>
+        </div>
+        <div class="list_item_content_message">
+          <div class="list_item_content_message_body">
+            {{ chat.message }}
+          </div>
+          <div class="list_item_content_message_info">
+            <div class="list_item_content_info_mute"></div>
+            @if(chat.unread) {
+              <div class="list_item_content_info_count">{{ chat.unread }}</div>
+            }
+            <div class="list_item_content_info_actions">{{ chat.group }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

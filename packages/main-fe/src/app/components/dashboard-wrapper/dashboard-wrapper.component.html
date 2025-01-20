@@ -1,0 +1,17 @@
+@switch (currentDashboard()) {
+  @case (dashboards.CHAT) {
+    <app-chat-dashboard></app-chat-dashboard>
+  }
+  @case (dashboards.STATUS) {
+    <app-status-dashboard></app-status-dashboard>
+  }
+  @case (dashboards.CHANNEL) {
+    <app-chanel-dashboard></app-chanel-dashboard>
+  }
+  @case (dashboards.COMMUNITY) {
+    <app-community-dashboard></app-community-dashboard>
+  }
+  @default {
+    <span>{{currentDashboard()}}a</span>
+  }
+}
