@@ -17,11 +17,12 @@ jobs:
         
       - name: Inject environment variables into app.yaml
         run: |
-          echo "
-          env_variables:
-          echo "${{ secrets.ENV_PROD_FILE }}" | while IFS='=' read -r key value; do
-            echo "  $key: \"$value\"" >> app.yaml
-          " >> app.yaml
+          echo "env_variables:" >> app.yaml
+          echo "${{ secrets.ENV_PROD_FILE }}" | awk -F'=' '{print "  " $1 ": \"" $2 "\""}' >> app.yaml
+        working-directory: packages/main-be
+
+      - name: Debug app.yaml
+        run: cat app.yaml
       
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
@@ -37,15 +38,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: packages/main-be
-
-      - name: Inject environment variables into app.yaml
-        run: |
-          echo "env_variables:" >> app.yaml
-          echo "${{ secrets.ENV_PROD_FILE }}" | awk -F'=' '{print "  " $1 ": \"" $2 "\""}' >> app.yaml
-        working-directory: packages/main-be
-
-      - name: Debug app.yaml
-        run: cat app.yaml
 
       - name: Build application
         run: npm run build
