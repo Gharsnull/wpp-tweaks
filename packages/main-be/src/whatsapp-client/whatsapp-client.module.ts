@@ -7,10 +7,17 @@ import { MessageHandlerService } from './event-handlers/message-handler/message-
 import { WhatsappClientService } from './services/whatsapp-client/whatsapp-client.service';
 import { GroupConfigurationModule } from '../group-configuration/group-configuration.module';
 import { CommandModule } from '../command/command.module';
+import { GroupParticipantsUpdateHandlerService } from './event-handlers/group-participants-update-handler/group-participants-update.handler.service';
 
 @Module({
   imports: [GroupModule, GroupConfigurationModule, CommandModule],
   controllers: [WhatsappClientController],
-  providers: [WhatsappClientService, ConnectionHandlerService, MessageHandlerService, GroupHandlerService],
+  providers: [
+    WhatsappClientService,
+    ConnectionHandlerService,
+    MessageHandlerService,
+    GroupHandlerService,
+    GroupParticipantsUpdateHandlerService
+  ],
 })
 export class WhatsappClientModule {}

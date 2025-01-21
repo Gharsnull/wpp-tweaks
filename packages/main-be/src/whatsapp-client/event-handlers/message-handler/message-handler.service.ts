@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { WhatsappEvents } from '../../constants/whatsapp-client.constants';
 import { WhatsappEventPayload } from '../../interfaces/whatsapp-client.interfaces';
-import { isCommandMessage, isGroupMessage, parseCommand } from './utils/message-handler.util';
+import { isCommandMessage, isGroupMessage, isOwnMessage, isUserMessage, parseCommand } from './utils/message-handler.util';
 import { GroupService } from '../../../group/services/group.service';
 import { CommandService } from '../../../command/services/command/command.service';
 
@@ -21,7 +21,7 @@ export class MessageHandlerService {
     const { messages } = event;
 
     messages?.forEach(message => {
-      if (!isGroupMessage(message)) {
+      if (!isGroupMessage(message) || isOwnMessage(message) || !isUserMessage(message)) {
         return;
       }
 

@@ -5,6 +5,14 @@ export const isGroupMessage = (message: WAMessage) => {
   return isJidGroup(message.key.remoteJid);
 }
 
+export const isOwnMessage = (message: WAMessage) => {
+  return message.key.fromMe;
+}
+
+export const isUserMessage = (message: WAMessage) => {
+  return !!message.message;
+}
+
 export const isCommandMessage = (message: WAMessage) => {
   const regex = /^\/[a-zA-Z0-9_-]+(?:\s+.+)?$/;
   const content = getMessageText(message);
@@ -21,4 +29,18 @@ export const parseCommand = (message: WAMessage): { command: Commands, args: str
 export const getMessageText = (message: WAMessage): string => {
   return message?.message?.conversation ||
     message?.message?.extendedTextMessage?.text;
+}
+
+export const getMentionedJids = (message: WAMessage): string[] => {
+  const extendedTextMessage = message?.message?.extendedTextMessage;
+  if (!extendedTextMessage) {
+    return [];
+  }
+
+  const entities = extendedTextMessage.contextInfo?.mentionedJid;
+  if (!entities) {
+    return [];
+  }
+
+  return entities;
 }

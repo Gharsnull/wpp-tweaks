@@ -36,4 +36,5 @@ export enum WhatsappEvents {
   CONNECTION_UPDATE = 'connection.update',
   MESSAGES_UPSERT = 'messages.upsert',
   GROUPS_UPSERT = 'groups.upsert',
+  GROUP_PARTICIPANTS_UPDATE = 'group-participants.update',
 }

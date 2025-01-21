@@ -6,5 +6,11 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     description: 'Ping the bot',
     adminOnly: false,
     enabled: true
+  },
+  {
+    name: 'ban',
+    description: 'Ban tagged users',
+    adminOnly: true,
+    enabled: true
   }
 ]

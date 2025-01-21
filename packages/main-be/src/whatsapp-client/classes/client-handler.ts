@@ -10,11 +10,13 @@ import {
   waLogger,
 } from '../constants/whatsapp-client.constants';
 import whatsappConfig from '../../config/whatsapp.config';
+import { normalizeJid } from './utils/client-handler.utils';
 
 export class ClientHandler {
   private readonly _logger = waLogger;
 
   _wppSocket: WASocket;
+  _userId: string;
 
   constructor(private readonly eventEmitter: EventEmitter2) { }
 
@@ -33,9 +35,12 @@ export class ClientHandler {
       },
     });
 
+    this._userId = normalizeJid(this._wppSocket.user.id);
+
     this._wppSocket.ev.process((events) => {
       if (!!events && Object.keys(events).length > 0) {
         Object.keys(events).forEach((key) => {
+          console.log('Event received:', key);
           this.eventEmitter.emit(key, { event: events[key], handler: this });
         });
       }
