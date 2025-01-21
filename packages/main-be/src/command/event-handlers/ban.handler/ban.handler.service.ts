@@ -34,6 +34,6 @@ export class BanHandlerService {
       { quoted: WaMessage }
     );
 
-    client._wppSocket.groupParticipantsUpdate(groupJid, getMentionedJids(WaMessage), 'remove');
+    client._wppSocket.groupParticipantsUpdate(groupJid, mentionedJids, 'remove');
   }
 }
