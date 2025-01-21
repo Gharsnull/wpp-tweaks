@@ -36,8 +36,6 @@ export class ClientHandler {
     this._wppSocket.ev.process((events) => {
       if (!!events && Object.keys(events).length > 0) {
         Object.keys(events).forEach((key) => {
-          this._logger.info(`Received Event: ${key}`);
-          console.log(`Received Event: ${key}`);
           this.eventEmitter.emit(key, { event: events[key], handler: this });
         });
       }
