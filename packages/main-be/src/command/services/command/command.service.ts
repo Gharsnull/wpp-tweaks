@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { GroupConfigurationService } from '../../../group-configuration/services/group-configuration/group-configuration.service';
 import { Commands } from '../../constants/command.constants';
@@ -7,12 +7,14 @@ import { GroupCommandOverride } from '../../../group-configuration/models/group-
 
 @Injectable()
 export class CommandService {
+  private readonly _logger = new Logger(CommandService.name);
   constructor(
     private readonly _eventEmitter: EventEmitter2,
     private readonly _groupConfigurationService: GroupConfigurationService,
   ) { }
 
   async handleCommand(command: Commands, payload: CommandPayload) {
+    this._logger.log(`Received command: ${command}`);
     const {
       groupJid,
       WaMessage,
