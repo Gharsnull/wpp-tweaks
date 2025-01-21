@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:all": "npm install --prefix packages/main-be && npm install --prefix packages/main-fe"
   },
   "author": "Gharsnull",
   "license": "ISC",
   "description": "",
-  "workspaces": [
-    "packages/*"
-  ],
   "devDependencies": {
     "glob": "11.0.0",
     "pm2": "5.4.2"
