@@ -9,3 +9,4 @@ health_check:
 automatic_scaling:
   target_cpu_utilization: 0.65
   target_throughput_utilization: 0.75
+  min_instances: 1
