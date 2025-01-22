@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { GroupService } from '../../../group/services/group.service';
 import { OnEvent } from '@nestjs/event-emitter';
+import { GroupService } from '../../../group/services/group.service';
+import { getMentionedJids } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 import { Commands } from '../../constants/command.constants';
 import { CommandPayload } from '../../interfaces/command.interfaces';
+import { jidToNumber } from '../../../whatsapp-client/classes/utils/client-handler.utils';
 
 @Injectable()
 export class MessageRankHandlerService {
@@ -13,11 +15,60 @@ export class MessageRankHandlerService {
 
   @OnEvent(Commands.MSG_RANK)
   async handleMessageRank(payload: CommandPayload) {
+    const { WaMessage, args } = payload;
+
+    const mentionedJids = getMentionedJids(WaMessage);
+
+    if(!!args?.length && !mentionedJids?.length) {
+      payload.client._wppSocket.sendMessage(
+        payload.groupJid,
+        {
+          text: 'You can only mention users or use the command with no arguments',
+        },
+        { quoted: WaMessage }
+      );
+      return;
+    }
+
+    if (!mentionedJids?.length) {
+      this.getSenderRank(payload);
+      return;
+    }
+
+    this.getMentionedUsersRank(payload);
+    return;
+  }
+
+  private async getMentionedUsersRank(payload: CommandPayload) {
+    const { groupJid, client, WaMessage } = payload;
+
+    const mentionedJids = getMentionedJids(WaMessage);
+
+    const usersRanks = await Promise.all(mentionedJids.map((jid) => this.getUserPosition(groupJid, jid, client._userId)));
+
+    const message = usersRanks.map((userRank) => {
+      if (userRank.position === -1) {
+        return `@${jidToNumber(userRank.jid)} has to send at least one message to get a rank`;
+      }
+      return `@${jidToNumber(userRank.jid)} is ranked #${userRank.position} with ${userRank.messagesCount} messages`;
+    }).join('\n');
+
+    client._wppSocket.sendMessage(
+      groupJid,
+      {
+        text: message,
+        mentions: usersRanks.map((userRank) => userRank.jid),
+      },
+      { quoted: WaMessage }
+    );
+  }
+
+  private async getSenderRank(payload: CommandPayload) {
     const { groupJid, senderJid, client, WaMessage } = payload;
 
     const userRank = await this.getUserPosition(groupJid, senderJid, client._userId);
 
-    if (userRank === -1) {
+    if (userRank.position === -1) {
       client._wppSocket.sendMessage(
         groupJid,
         {
@@ -37,15 +88,16 @@ export class MessageRankHandlerService {
       },
       { quoted: WaMessage }
     );
+
   }
 
-  private async getUserPosition(groupJid: string, senderJid: string, botId: string): Promise<{ position: number, messagesCount: number } | -1> {
+  private async getUserPosition(groupJid: string, userJid: string, botId: string): Promise<{ position: number, messagesCount: number, jid: string }> {
     const senderMessageCountResult = await this._groupService.queryGroupMembers([
       {
         $match: {
           $and: [
             { groupJid },
-            { jid: senderJid },
+            { jid: userJid },
             { jid: { $ne: botId } },
           ]
         }
@@ -60,7 +112,11 @@ export class MessageRankHandlerService {
     const senderMessageCount = senderMessageCountResult[0]?.messagesCount;
 
     if (senderMessageCount === undefined) {
-      return -1;
+      return {
+        position: -1,
+        messagesCount: 0,
+        jid: userJid,
+      };
     }
 
     const positionResult = await this._groupService.queryGroupMembers([
@@ -82,6 +138,7 @@ export class MessageRankHandlerService {
     return {
       position: higherRankCount + 1,
       messagesCount: senderMessageCount,
+      jid: userJid,
     };
   }
 }
