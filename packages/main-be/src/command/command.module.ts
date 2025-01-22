@@ -5,10 +5,11 @@ import { GroupConfigurationModule } from '../group-configuration/group-configura
 import { BanHandlerService } from './event-handlers/ban.handler/ban.handler.service';
 import { GroupModule } from '../group/group.module';
 import { MessageTopHandlerService } from './event-handlers/message-top.handler/message-top.handler.service';
+import { MessageRankHandlerService } from './event-handlers/message-rank.handler/message-rank.handler.service';
 
 @Module({
   imports: [GroupConfigurationModule, GroupModule],
-  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService],
+  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService],
   exports: [CommandService],
 })
 export class CommandModule {}
