@@ -35,7 +35,9 @@ export class ClientHandler {
       },
     });
 
-    this._userId = normalizeJid(this._wppSocket.user.id);
+    if(this._wppSocket?.user?.id) {
+      this._userId = normalizeJid(this._wppSocket.user.id);
+    }
 
     this._wppSocket.ev.process((events) => {
       if (!!events && Object.keys(events).length > 0) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Group } from '../models/group.model';
-import { DeleteResult, Model } from 'mongoose';
+import { DeleteResult, Model, PipelineStage } from 'mongoose';
 import { GroupMember } from '../models/group-member.model';
 import { BulkWriteResult } from 'mongodb';
 
@@ -66,5 +66,9 @@ export class GroupService {
 
   getGroupMember(jid: string, groupJid: string): Promise<GroupMember> {
     return this._groupMemberModel.findOne({ jid, groupJid }).exec();
+  }
+
+  queryGroupMembers(pipeline: PipelineStage[]): Promise<GroupMember[]> {
+    return this._groupMemberModel.aggregate(pipeline).exec();
   }
 }
