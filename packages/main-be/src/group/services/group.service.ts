@@ -53,8 +53,9 @@ export class GroupService {
   }
 
   increaseGroupMemberMessagesCount(groupJid: string, jid: string): Promise<GroupMember> {
-    return this._groupMemberModel.findOneAndUpdate({ groupJid, jid }, { $inc: { messagesCount: 1 } }, { new: true }).exec();
+    return this._groupMemberModel.findOneAndUpdate({ groupJid, jid }, { $inc: { messagesCount: 1 }, $set: { active: true } }, { new: true }).exec();
   }
+  
   removeGroupMembers(groupJid: string, participants: string[]): Promise<DeleteResult> {
     return this._groupMemberModel.deleteMany({ groupJid, jid: { $in: participants } }).exec();
   }

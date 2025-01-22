@@ -40,7 +40,13 @@ export class GroupParticipantsUpdateHandlerService {
       participants.forEach(participant => {
         this._logger.log(`Removing ${participant} from group ${groupJid}`);
       });
-      this._groupService.removeGroupMembers(groupJid, participants);
+
+      const update = participants.map(participant => ({
+        jid: participant,
+        groupJid,
+        active: false,
+      })) as GroupMember[];
+      this._groupService.upsertGroupMembers(update);
       return;
     }
 
@@ -52,6 +58,7 @@ export class GroupParticipantsUpdateHandlerService {
         jid: participant,
         groupJid,
         isAdmin: false,
+        active: true,
       })) as GroupMember[];
       this._groupService.upsertGroupMembers(update);
       return;

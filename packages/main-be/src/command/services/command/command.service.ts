@@ -84,6 +84,6 @@ export class CommandService {
   private async isUserAdmin(userJid: string, groupJid: string): Promise<boolean> {
     const user = await this._groupService.getGroupMember(userJid, groupJid);
 
-    return user?.isAdmin;
+    return user?.isAdmin && user?.active;
   }
 }

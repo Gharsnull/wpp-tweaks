@@ -20,6 +20,9 @@ export class GroupMember {
   @Prop({ default: false })
   isAdmin: boolean;
 
+  @Prop({ default: true })
+  active: boolean;
+
   @Prop({ default: 0 })
   messagesCount: number;
 
