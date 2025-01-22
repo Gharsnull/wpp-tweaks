@@ -28,11 +28,13 @@ export const parseCommand = (message: WAMessage): { command: Commands, args: str
 
 export const getMessageText = (message: WAMessage): string => {
   return message?.message?.conversation ||
-    message?.message?.extendedTextMessage?.text;
+    message?.message?.extendedTextMessage?.text ||
+    message?.message?.ephemeralMessage?.message?.extendedTextMessage?.text;
 }
 
 export const getMentionedJids = (message: WAMessage): string[] => {
-  const extendedTextMessage = message?.message?.extendedTextMessage;
+  const extendedTextMessage = message?.message?.extendedTextMessage ||
+   message?.message?.ephemeralMessage?.message?.extendedTextMessage;
   if (!extendedTextMessage) {
     return [];
   }
