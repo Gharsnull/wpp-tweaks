@@ -26,6 +26,7 @@ export const WaClientConfig: Partial<UserFacingSocketConfig> = {
   generateHighQualityLinkPreview: true,
   logger: waLogger,
   printQRInTerminal: true,
+  syncFullHistory: false
 };
 
 // Use `keyof` to extract the keys from the BaileysEventMap type
