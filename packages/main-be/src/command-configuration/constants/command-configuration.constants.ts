@@ -24,5 +24,17 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: false,
     enabled: true,
     description: 'Show rank of the sender or the notified participants'
+  },
+  {
+    name: 'mute',
+    adminOnly: true,
+    enabled: true,
+    description: 'Mute tagged users'
+  },
+  {
+    name: 'unmute',
+    adminOnly: true,
+    enabled: true,
+    description: 'Unmute tagged users'
   }
 ]

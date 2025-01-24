@@ -32,8 +32,8 @@ export class GroupService {
     return this._groupModel.find().exec();
   }
   
-  getGroupMembers(jid: string, onlyAdmins?: boolean): Promise<GroupMember[]> {
-    const query = { jid };
+  getGroupMembers(groupJid: string, onlyAdmins?: boolean): Promise<GroupMember[]> {
+    const query = { groupJid };
 
     if (onlyAdmins) {
       query['isAdmin'] = true;

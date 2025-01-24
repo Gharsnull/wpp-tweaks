@@ -6,10 +6,11 @@ import { BanHandlerService } from './event-handlers/ban.handler/ban.handler.serv
 import { GroupModule } from '../group/group.module';
 import { MessageTopHandlerService } from './event-handlers/message-top.handler/message-top.handler.service';
 import { MessageRankHandlerService } from './event-handlers/message-rank.handler/message-rank.handler.service';
+import { MuteHandlerService } from './event-handlers/mute.handler/mute.handler.service';
 
 @Module({
   imports: [GroupConfigurationModule, GroupModule],
-  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService],
+  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService],
   exports: [CommandService],
 })
 export class CommandModule {}

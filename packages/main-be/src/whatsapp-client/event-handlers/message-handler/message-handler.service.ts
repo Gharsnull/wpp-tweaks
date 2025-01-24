@@ -22,12 +22,18 @@ export class MessageHandlerService {
     const { event, handler } = payload;
     const { messages } = event;
 
-    messages?.forEach(message => {
+    messages?.forEach( async (message) => {
       const normalizedMessage = normalizeMessageContent(message.message);
       const contentType = getContentType(normalizedMessage);
 
+      
       if(!isValidMessage(normalizedMessage)) {
         this._logger.log(`Invalid message received from ${message.key.participant} in group ${message.key.remoteJid}. MessageType: ${contentType}`);
+        return;
+      }
+      
+      if(await this.checkIfSenderMuted(message.key.participant, message.key.remoteJid)) {
+        handler._wppSocket.sendMessage(message.key.remoteJid, { delete: message.key });
         return;
       }
 
@@ -64,5 +70,21 @@ export class MessageHandlerService {
       { text: '@573163545096', mentions: ['573163545096@s.whatsapp.net'] },
       { quoted: message }
     )
+  }
+
+  private async checkIfSenderMuted(senderJid: string, groupJid: string): Promise<boolean> {
+    const pipeline = [
+      {
+        $match: {
+          jid: senderJid,
+          groupJid,
+          muted: true,
+        },
+      },
+    ]
+    
+    const mutedMembers = await this._groupService.queryGroupMembers(pipeline);
+
+    return !!mutedMembers?.length;
   }
 }

@@ -26,6 +26,9 @@ export class GroupMember {
   @Prop({ default: 0 })
   messagesCount: number;
 
+  @Prop({ default: false })
+  muted: boolean;
+
   @Prop()
   lastMessageAt: Date;
 
@@ -40,6 +43,7 @@ const _schema = SchemaFactory.createForClass(GroupMember);
 _schema.index({ group: 1, jid: 1 }, { unique: true });
 _schema.index({ group: 1, isAdmin: 1 });
 _schema.index({ group: 1, messagesCount: -1 });
+_schema.index({ group: 1, muted: 1 });
 
 export const groupMemberDefinition = {
   name: GroupMember.NAME,
