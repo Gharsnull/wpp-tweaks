@@ -40,6 +40,8 @@ export class MessageHandlerService {
         return;
       }
 
+      this._logger.log(`Received message from ${message.key.participant} in group ${message.key.remoteJid}`);
+      this._logger.log(JSON.stringify(message, null, 2));
       this._groupService.increaseGroupMemberMessagesCount(message.key.remoteJid, message.key.participant);
     });
   }
