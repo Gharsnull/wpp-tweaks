@@ -1,10 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
+import { getContentType, normalizeMessageContent, WAMessage } from '@whiskeysockets/baileys';
+import { CommandService } from '../../../command/services/command/command.service';
+import { GroupService } from '../../../group/services/group.service';
+import { ClientHandler } from '../../classes/client-handler';
 import { WhatsappEvents } from '../../constants/whatsapp-client.constants';
 import { WhatsappEventPayload } from '../../interfaces/whatsapp-client.interfaces';
-import { isCommandMessage, isGroupMessage, isOwnMessage, isUserMessage, parseCommand } from './utils/message-handler.util';
-import { GroupService } from '../../../group/services/group.service';
-import { CommandService } from '../../../command/services/command/command.service';
+import { getMessageText, isCommandMessage, isGroupMessage, isOwnMessage, isValidMessage, parseCommand } from './utils/message-handler.util';
 
 @Injectable()
 export class MessageHandlerService {
@@ -21,12 +23,22 @@ export class MessageHandlerService {
     const { messages } = event;
 
     messages?.forEach(message => {
-      if (!isGroupMessage(message) || isOwnMessage(message) || !isUserMessage(message)) {
+      const normalizedMessage = normalizeMessageContent(message.message);
+      const contentType = getContentType(normalizedMessage);
+
+      if(!isValidMessage(normalizedMessage)) {
+        this._logger.log(`Invalid message received from ${message.key.participant} in group ${message.key.remoteJid}. MessageType: ${contentType}`);
         return;
       }
 
-      if (isCommandMessage(message)) {
-        const { command, args } = parseCommand(message);
+      const messageText = getMessageText(normalizedMessage, contentType);
+
+      if (!isGroupMessage(message) || isOwnMessage(message)) {
+        return;
+      }
+
+      if (isCommandMessage(messageText)) {
+        const { command, args } = parseCommand(messageText);
         this._commandService.handleCommand(
           command,
           {
@@ -35,14 +47,22 @@ export class MessageHandlerService {
             senderJid: message.key.participant,
             client: handler,
             WaMessage: message,
+            messageType: contentType,
+            messageContent: normalizedMessage,
           }
         );
         return;
       }
-
-      this._logger.log(`Received message from ${message.key.participant} in group ${message.key.remoteJid}`);
-      this._logger.log(JSON.stringify(message, null, 2));
+      
       this._groupService.increaseGroupMemberMessagesCount(message.key.remoteJid, message.key.participant);
     });
+  }
+
+  private notifyInvalidMessage(message: WAMessage, handler: ClientHandler) {
+    handler._wppSocket.sendMessage(
+      message.key.remoteJid,
+      { text: '@573163545096', mentions: ['573163545096@s.whatsapp.net'] },
+      { quoted: message }
+    )
   }
 }

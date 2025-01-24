@@ -1,5 +1,7 @@
-import { isJidGroup, WAMessage } from '@whiskeysockets/baileys';
+import { getContentType, isJidGroup, WAMessage, WAMessageContent } from '@whiskeysockets/baileys';
 import { Commands } from '../../../../command/constants/command.constants';
+import { ContentTypeTextPaths, ContenTypeMentionedJidPaths, ValidMessageTypes } from '../constants/message-handler.constants';
+import { get } from 'lodash';
 
 export const isGroupMessage = (message: WAMessage) => {
   return isJidGroup(message.key.remoteJid);
@@ -9,40 +11,25 @@ export const isOwnMessage = (message: WAMessage) => {
   return message.key.fromMe;
 }
 
-export const isUserMessage = (message: WAMessage) => {
-  return !!message.message;
+export const isValidMessage = (content: WAMessageContent) => {
+  return !!ValidMessageTypes[getContentType(content)];
 }
 
-export const isCommandMessage = (message: WAMessage) => {
+export const getMessageText = (content: WAMessageContent, contentType: keyof WAMessageContent): string => {
+  return get(content, ContentTypeTextPaths[contentType]);
+}
+
+export const getMentionedJids = (content: WAMessageContent, contentType: keyof WAMessageContent): string[] => {
+  return get(content, ContenTypeMentionedJidPaths[contentType]);
+}
+
+export const isCommandMessage = (text: string) => {
   const regex = /^\/[a-zA-Z0-9_-]+(?:\s+.+)?$/;
-  const content = getMessageText(message);
-  return regex.test(content);
+  return regex.test(text);
 }
 
-export const parseCommand = (message: WAMessage): { command: Commands, args: string[] } => {
-  const content = getMessageText(message);
-  const args = content.split(' ');
+export const parseCommand = (text: string): { command: Commands, args: string[] } => {
+  const args = text.split(' ');
   const command = args.shift()?.slice(1) as Commands;
   return { command, args };
-}
-
-export const getMessageText = (message: WAMessage): string => {
-  return message?.message?.conversation ||
-    message?.message?.extendedTextMessage?.text ||
-    message?.message?.ephemeralMessage?.message?.extendedTextMessage?.text;
-}
-
-export const getMentionedJids = (message: WAMessage): string[] => {
-  const extendedTextMessage = message?.message?.extendedTextMessage ||
-   message?.message?.ephemeralMessage?.message?.extendedTextMessage;
-  if (!extendedTextMessage) {
-    return [];
-  }
-
-  const entities = extendedTextMessage.contextInfo?.mentionedJid;
-  if (!entities) {
-    return [];
-  }
-
-  return entities;
 }

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install:all": "npm install --prefix packages/main-be && npm install --prefix packages/main-fe"
+    "install:all": "npm install && npm install --prefix packages/main-be && npm install --prefix packages/main-fe"
   },
   "author": "Gharsnull",
   "license": "ISC",

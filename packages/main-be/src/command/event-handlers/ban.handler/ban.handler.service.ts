@@ -14,9 +14,11 @@ export class BanHandlerService {
       groupJid,
       WaMessage,
       client,
+      messageType,
+      messageContent,
     } = payload;
 
-    const mentionedJids = getMentionedJids(WaMessage).filter(jid => jid !== client._userId);
+    const mentionedJids = getMentionedJids(messageContent, messageType).filter(jid => jid !== client._userId);
 
     if (!mentionedJids?.length) {
       client._wppSocket.sendMessage(

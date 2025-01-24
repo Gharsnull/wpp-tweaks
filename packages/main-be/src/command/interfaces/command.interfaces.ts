@@ -1,4 +1,4 @@
-import { WAMessage } from '@whiskeysockets/baileys';
+import { WAMessage, WAMessageContent } from '@whiskeysockets/baileys';
 import { ClientHandler } from '../../whatsapp-client/classes/client-handler';
 
 export interface CommandPayload {
@@ -7,4 +7,6 @@ export interface CommandPayload {
   args: string[];
   client: ClientHandler;
   WaMessage: WAMessage;
+  messageType: keyof WAMessageContent;
+  messageContent: WAMessageContent;
 }
