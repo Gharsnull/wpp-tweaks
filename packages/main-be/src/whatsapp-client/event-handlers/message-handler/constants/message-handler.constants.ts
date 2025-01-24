@@ -4,6 +4,7 @@ export enum ValidMessageTypes {
   imageMessage = "imageMessage",
   videoMessage = "videoMessage",
   stickerMessage = "stickerMessage",
+  audioMessage = "audioMessage",
 }
 
 export const ContentTypeTextPaths = {
