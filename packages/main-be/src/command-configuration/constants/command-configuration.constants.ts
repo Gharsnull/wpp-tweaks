@@ -12,5 +12,17 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     description: 'Ban tagged users',
     adminOnly: true,
     enabled: true
+  },
+  {
+    name: 'msgTop',
+    adminOnly: false,
+    enabled: true,
+    description: 'Show top 5 participants based on message count'
+  },
+  {
+    name: 'msgRank',
+    adminOnly: false,
+    enabled: true,
+    description: 'Show rank of the sender or the notified participants'
   }
 ]
