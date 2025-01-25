@@ -23,7 +23,7 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     name: 'msgRank',
     adminOnly: false,
     enabled: true,
-    description: 'Show rank of the sender or the notified participants'
+    description: 'Show rank of the sender or the tagged participants'
   },
   {
     name: 'mute',
@@ -36,5 +36,11 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: true,
     enabled: true,
     description: 'Unmute tagged users'
+  },
+  {
+    name: 'help',
+    adminOnly: false,
+    enabled: true,
+    description: 'Get list of commands'
   }
 ]

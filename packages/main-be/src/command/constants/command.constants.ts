@@ -4,5 +4,6 @@ export enum Commands {
   MSG_TOP = 'msgTop',
   MSG_RANK = 'msgRank',
   MUTE = 'mute',
-  UNMUTE = 'unmute'
+  UNMUTE = 'unmute',
+  HELP = 'help'
 }

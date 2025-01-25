@@ -7,10 +7,11 @@ import { GroupModule } from '../group/group.module';
 import { MessageTopHandlerService } from './event-handlers/message-top.handler/message-top.handler.service';
 import { MessageRankHandlerService } from './event-handlers/message-rank.handler/message-rank.handler.service';
 import { MuteHandlerService } from './event-handlers/mute.handler/mute.handler.service';
+import { HelpHandlerService } from './event-handlers/help.handler/help.handler.service';
 
 @Module({
   imports: [GroupConfigurationModule, GroupModule],
-  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService],
+  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService],
   exports: [CommandService],
 })
 export class CommandModule {}
