@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Group } from '../../group/models/group.model';
+import { CountryCode } from 'libphonenumber-js';
 
 export interface GroupCommandOverride {
   name: string;
@@ -20,6 +21,9 @@ export class GroupConfiguration {
 
   @Prop()
   commands: GroupCommandOverride[];
+
+  @Prop()
+  countryWhitelist: CountryCode[];
 }
 
 const _schema = SchemaFactory.createForClass(GroupConfiguration);
