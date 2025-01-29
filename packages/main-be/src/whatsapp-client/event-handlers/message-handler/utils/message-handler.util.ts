@@ -36,7 +36,9 @@ export const parseCommand = (text: string): { command: Commands, args: string[] 
 }
 
 export const mimicMessage = (text: string): string => {
-  return text.replace(/[aeiouAEIOU]/g, 'i');
+  return text.replace(/[aeiouáéíóúAEIOUÁÉÍÓÚ]/g, match => {
+    return match === match.toUpperCase() ? 'I' : 'i';
+  });
 }
 
 export const removeMentionsFromText = (text: string, mentionedJids: string[]): string => {
