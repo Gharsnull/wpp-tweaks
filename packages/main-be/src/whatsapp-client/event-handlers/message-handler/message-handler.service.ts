@@ -24,10 +24,11 @@ export class MessageHandlerService {
 
     messages?.forEach( async (message) => {
       const normalizedMessage = normalizeMessageContent(message.message);
+      const isViewOnceMessage = message.messageStubParameters?.[0] === 'Message absent from node';
       const contentType = getContentType(normalizedMessage);
 
       
-      if(!isValidMessage(normalizedMessage)) {
+      if(!isValidMessage(normalizedMessage) && !isViewOnceMessage) {
         this._logger.log(`Invalid message received from ${message.key.participant} in group ${message.key.remoteJid}. MessageType: ${contentType}`);
         return;
       }
