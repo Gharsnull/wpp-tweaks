@@ -42,5 +42,17 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: false,
     enabled: true,
     description: 'Get list of commands'
+  },
+  {
+    name: 'mimic',
+    adminOnly: true,
+    enabled: true,
+    description: 'Mimic tagged users'
+  },
+  {
+    name: 'unmimic',
+    adminOnly: true,
+    enabled: true,
+    description: 'Unmimic tagged users'
   }
 ]

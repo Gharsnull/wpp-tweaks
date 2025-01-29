@@ -1,12 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { getContentType, normalizeMessageContent, WAMessage } from '@whiskeysockets/baileys';
+import { getContentType, normalizeMessageContent } from '@whiskeysockets/baileys';
 import { CommandService } from '../../../command/services/command/command.service';
 import { GroupService } from '../../../group/services/group.service';
-import { ClientHandler } from '../../classes/client-handler';
 import { WhatsappEvents } from '../../constants/whatsapp-client.constants';
 import { WhatsappEventPayload } from '../../interfaces/whatsapp-client.interfaces';
-import { getMessageText, isCommandMessage, isGroupMessage, isOwnMessage, isValidMessage, parseCommand } from './utils/message-handler.util';
+import { getMentionedJids, getMessageText, isCommandMessage, isGroupMessage, isOwnMessage, isValidMessage, mimicMessage, parseCommand, removeMentionsFromText } from './utils/message-handler.util';
 
 @Injectable()
 export class MessageHandlerService {
@@ -22,27 +21,32 @@ export class MessageHandlerService {
     const { event, handler } = payload;
     const { messages } = event;
 
-    messages?.forEach( async (message) => {
+    messages?.forEach(async (message) => {
       const normalizedMessage = normalizeMessageContent(message.message);
       const isViewOnceMessage = message.messageStubParameters?.[0] === 'Message absent from node';
       const contentType = getContentType(normalizedMessage);
 
-      
-      if(!isValidMessage(normalizedMessage) && !isViewOnceMessage) {
+      if (!isValidMessage(normalizedMessage) && !isViewOnceMessage) {
         this._logger.log(`Invalid message received from ${message.key.participant} in group ${message.key.remoteJid}. MessageType: ${contentType}`);
         return;
       }
-      
-      if(await this.checkIfSenderMuted(message.key.participant, message.key.remoteJid)) {
+
+      // Single database query to get member data
+      const member = await this._groupService.getGroupMember(
+        message.key.participant,
+        message.key.remoteJid,
+      );
+
+      if (member?.muted) {
         handler._wppSocket.sendMessage(message.key.remoteJid, { delete: message.key });
         return;
       }
 
-      const messageText = getMessageText(normalizedMessage, contentType);
-
       if (!isGroupMessage(message) || isOwnMessage(message)) {
         return;
       }
+
+      const messageText = getMessageText(normalizedMessage, contentType);
 
       if (isCommandMessage(messageText)) {
         const { command, args } = parseCommand(messageText);
@@ -60,32 +64,21 @@ export class MessageHandlerService {
         );
         return;
       }
-      
+
+      if (messageText && member?.mimic) {
+        let textToMimic = messageText;
+        const mentionedJids = getMentionedJids(normalizedMessage, contentType);
+
+        if (mentionedJids?.length) {
+          textToMimic = removeMentionsFromText(messageText, mentionedJids);
+        }
+
+        if(textToMimic) {
+          handler._wppSocket.sendMessage(message.key.remoteJid, { text: mimicMessage(textToMimic) }, { quoted: message });
+        }
+      }
+
       this._groupService.increaseGroupMemberMessagesCount(message.key.remoteJid, message.key.participant);
     });
-  }
-
-  private notifyInvalidMessage(message: WAMessage, handler: ClientHandler) {
-    handler._wppSocket.sendMessage(
-      message.key.remoteJid,
-      { text: '@573163545096', mentions: ['573163545096@s.whatsapp.net'] },
-      { quoted: message }
-    )
-  }
-
-  private async checkIfSenderMuted(senderJid: string, groupJid: string): Promise<boolean> {
-    const pipeline = [
-      {
-        $match: {
-          jid: senderJid,
-          groupJid,
-          muted: true,
-        },
-      },
-    ]
-    
-    const mutedMembers = await this._groupService.queryGroupMembers(pipeline);
-
-    return !!mutedMembers?.length;
   }
 }

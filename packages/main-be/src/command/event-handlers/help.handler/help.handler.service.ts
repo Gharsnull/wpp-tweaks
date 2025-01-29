@@ -11,15 +11,15 @@ export class HelpHandlerService {
   constructor(
     private readonly _groupConfigService: GroupConfigurationService,
     private readonly _groupService: GroupService,
-  ) {}
+  ) { }
 
   @OnEvent(Commands.HELP)
   async handleHelp(payload: CommandPayload) {
     const { client, groupJid, WaMessage, senderJid } = payload;
 
     const queryResult = await this._groupConfigService.queryGroupConfiguration([{ $match: { groupJid } }]);
-    
-    if(!queryResult?.length) {
+
+    if (!queryResult?.length) {
       client._wppSocket.sendMessage(
         groupJid,
         {
@@ -28,13 +28,13 @@ export class HelpHandlerService {
         { quoted: WaMessage }
       );
     }
-    
+
     const groupConfig = queryResult[0];
     const getSenderData = await this._groupService.getGroupMember(senderJid, groupJid);
     const isAdmin = getSenderData?.isAdmin;
     let availableCommands = groupConfig.commands;
 
-    if(!isAdmin) {
+    if (!isAdmin) {
       availableCommands = groupConfig.commands.filter((command) => !command.adminOnly);
     }
 

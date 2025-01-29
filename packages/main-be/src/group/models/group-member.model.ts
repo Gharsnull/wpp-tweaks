@@ -29,6 +29,9 @@ export class GroupMember {
   @Prop({ default: false })
   muted: boolean;
 
+  @Prop({ default: false })
+  mimic: boolean;
+
   @Prop()
   lastMessageAt: Date;
 

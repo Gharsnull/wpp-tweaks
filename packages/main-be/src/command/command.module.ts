@@ -8,10 +8,11 @@ import { MessageTopHandlerService } from './event-handlers/message-top.handler/m
 import { MessageRankHandlerService } from './event-handlers/message-rank.handler/message-rank.handler.service';
 import { MuteHandlerService } from './event-handlers/mute.handler/mute.handler.service';
 import { HelpHandlerService } from './event-handlers/help.handler/help.handler.service';
+import { MimicHandlerService } from './event-handlers/mimic.handler/mimic.handler.service';
 
 @Module({
   imports: [GroupConfigurationModule, GroupModule],
-  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService],
+  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService, MimicHandlerService],
   exports: [CommandService],
 })
 export class CommandModule {}

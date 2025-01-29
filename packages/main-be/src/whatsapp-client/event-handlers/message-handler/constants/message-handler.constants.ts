@@ -17,6 +17,8 @@ export const ContentTypeTextPaths = {
   [ValidMessageTypes.imageMessage]: 'imageMessage.caption',
   [ValidMessageTypes.videoMessage]: 'videoMessage.caption',
   [ValidMessageTypes.documentMessage]: 'documentMessage.caption',
+  [ValidMessageTypes.pollCreationMessageV3]: 'pollCreationMessageV3.name',
+  [ValidMessageTypes.eventMessage]: 'eventMessage.name',
 } as const
 
 export const ContenTypeMentionedJidPaths = {

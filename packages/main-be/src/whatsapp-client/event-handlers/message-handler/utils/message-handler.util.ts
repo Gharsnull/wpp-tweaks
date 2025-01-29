@@ -2,6 +2,7 @@ import { getContentType, isJidGroup, WAMessage, WAMessageContent } from '@whiske
 import { Commands } from '../../../../command/constants/command.constants';
 import { ContentTypeTextPaths, ContenTypeMentionedJidPaths, ValidMessageTypes } from '../constants/message-handler.constants';
 import { get } from 'lodash';
+import { jidToNumber } from '../../../classes/utils/client-handler.utils';
 
 export const isGroupMessage = (message: WAMessage) => {
   return isJidGroup(message.key.remoteJid);
@@ -32,4 +33,13 @@ export const parseCommand = (text: string): { command: Commands, args: string[] 
   const args = text.split(' ');
   const command = args.shift()?.slice(1) as Commands;
   return { command, args };
+}
+
+export const mimicMessage = (text: string): string => {
+  return text.replace(/[aeiouAEIOU]/g, 'i');
+}
+
+export const removeMentionsFromText = (text: string, mentionedJids: string[]): string => {
+  const mentionedNumbers = mentionedJids.map(jidToNumber);
+  return mentionedNumbers.reduce((acc, jid) => acc.replace(new RegExp(`@${jid}`, 'g'), ''), text);
 }
