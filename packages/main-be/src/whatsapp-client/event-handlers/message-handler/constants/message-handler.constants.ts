@@ -6,6 +6,8 @@ export enum ValidMessageTypes {
   stickerMessage = "stickerMessage",
   audioMessage = "audioMessage",
   documentMessage = "documentMessage",
+  pollCreationMessageV3 = "pollCreationMessageV3",
+  contactMessage = "contactMessage",
 }
 
 export const ContentTypeTextPaths = {

@@ -61,7 +61,7 @@ export class GroupParticipantsUpdateHandlerService {
       const botMember = await this._groupService.queryGroupMembers([{ $match: { groupJid, jid: handler._userId } }]);
       const isBotAdmin = botMember?.[0]?.isAdmin;
 
-      if (!groupConfig) {
+      if (!groupConfig?.length) {
         this._logger.error(`Group configuration not found for group ${groupJid}`);
         return;
       }
