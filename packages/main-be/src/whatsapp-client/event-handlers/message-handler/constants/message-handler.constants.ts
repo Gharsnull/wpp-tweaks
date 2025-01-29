@@ -8,6 +8,7 @@ export enum ValidMessageTypes {
   documentMessage = "documentMessage",
   pollCreationMessageV3 = "pollCreationMessageV3",
   contactMessage = "contactMessage",
+  eventMessage = "eventMessage",
 }
 
 export const ContentTypeTextPaths = {
