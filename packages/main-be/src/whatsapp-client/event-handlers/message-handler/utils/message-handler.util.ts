@@ -37,7 +37,10 @@ export const parseCommand = (text: string): { command: Commands, args: string[] 
 
 export const mimicMessage = (text: string): string => {
   return text.replace(/[aeiouáéíóúAEIOUÁÉÍÓÚ]/g, match => {
-    return match === match.toUpperCase() ? 'I' : 'i';
+    const isUpperCase = match === match.toUpperCase();
+    const hasAccent = /[áéíóúÁÉÍÓÚ]/.test(match);
+    
+    return hasAccent ? (isUpperCase ? 'Í' : 'í') : (isUpperCase ? 'I' : 'i');
   });
 }
 
