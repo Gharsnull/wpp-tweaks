@@ -54,5 +54,11 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: true,
     enabled: true,
     description: 'Unmimic tagged users'
+  },
+  {
+    name: 'tagAll',
+    adminOnly: true,
+    enabled: true,
+    description: 'Tag all group members'
   }
 ]

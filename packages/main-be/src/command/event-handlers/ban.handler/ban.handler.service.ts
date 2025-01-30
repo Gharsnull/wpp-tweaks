@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
 import { CommandPayload } from '../../interfaces/command.interfaces';
-import { getMentionedJids } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
+import { getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 
 @Injectable()
 export class BanHandlerService {
@@ -18,7 +18,7 @@ export class BanHandlerService {
       messageContent,
     } = payload;
 
-    const mentionedJids = getMentionedJids(messageContent, messageType).filter(jid => jid !== client._userId);
+    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid.filter(jid => jid !== client._userId);
 
     if (!mentionedJids?.length) {
       client._wppSocket.sendMessage(

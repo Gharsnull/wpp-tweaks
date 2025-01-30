@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { GroupService } from '../../../group/services/group.service';
-import { getMentionedJids } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 import { Commands } from '../../constants/command.constants';
 import { CommandPayload } from '../../interfaces/command.interfaces';
 import { jidToNumber } from '../../../whatsapp-client/classes/utils/client-handler.utils';
+import { getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 
 @Injectable()
 export class MessageRankHandlerService {
@@ -17,7 +17,7 @@ export class MessageRankHandlerService {
   async handleMessageRank(payload: CommandPayload) {
     const { WaMessage, args, messageType, messageContent } = payload;
 
-    const mentionedJids = getMentionedJids(messageContent, messageType);
+    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid;
 
     if(!!args?.length && !mentionedJids?.length) {
       payload.client._wppSocket.sendMessage(
@@ -42,7 +42,7 @@ export class MessageRankHandlerService {
   private async getMentionedUsersRank(payload: CommandPayload) {
     const { groupJid, client, WaMessage, messageContent, messageType } = payload;
 
-    const mentionedJids = getMentionedJids(messageContent, messageType);
+    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid;
 
     const usersRanks = await Promise.all(mentionedJids.map((jid) => this.getUserPosition(groupJid, jid, client._userId)));
 

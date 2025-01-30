@@ -5,7 +5,17 @@ import { CommandService } from '../../../command/services/command/command.servic
 import { GroupService } from '../../../group/services/group.service';
 import { WhatsappEvents } from '../../constants/whatsapp-client.constants';
 import { WhatsappEventPayload } from '../../interfaces/whatsapp-client.interfaces';
-import { getMentionedJids, getMessageText, isCommandMessage, isGroupMessage, isOwnMessage, isValidMessage, mimicMessage, parseCommand, removeMentionsFromText } from './utils/message-handler.util';
+import { 
+  getContextInfo,
+  getMessageText,
+  isCommandMessage,
+  isGroupMessage,
+  isOwnMessage,
+  isValidMessage,
+  mimicMessage,
+  parseCommand,
+  removeMentionsFromText 
+} from './utils/message-handler.util';
 
 @Injectable()
 export class MessageHandlerService {
@@ -67,7 +77,7 @@ export class MessageHandlerService {
 
       if (messageText && member?.mimic) {
         let textToMimic = messageText;
-        const mentionedJids = getMentionedJids(normalizedMessage, contentType);
+        const mentionedJids = getContextInfo(normalizedMessage, contentType).mentionedJid;
 
         if (mentionedJids?.length) {
           textToMimic = removeMentionsFromText(messageText, mentionedJids);

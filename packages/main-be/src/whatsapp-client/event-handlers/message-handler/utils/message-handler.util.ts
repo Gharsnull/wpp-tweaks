@@ -1,6 +1,6 @@
-import { getContentType, isJidGroup, WAMessage, WAMessageContent } from '@whiskeysockets/baileys';
+import { getContentType, isJidGroup, normalizeMessageContent, WAContextInfo, WAMessage, WAMessageContent } from '@whiskeysockets/baileys';
 import { Commands } from '../../../../command/constants/command.constants';
-import { ContentTypeTextPaths, ContenTypeMentionedJidPaths, ValidMessageTypes } from '../constants/message-handler.constants';
+import { ContentTypeTextPaths, ContenTypeMentionedJidPaths, ContextInfoPaths, QuotedMessagePaths, ValidMessageTypes } from '../constants/message-handler.constants';
 import { get } from 'lodash';
 import { jidToNumber } from '../../../classes/utils/client-handler.utils';
 
@@ -20,8 +20,8 @@ export const getMessageText = (content: WAMessageContent, contentType: keyof WAM
   return get(content, ContentTypeTextPaths[contentType]);
 }
 
-export const getMentionedJids = (content: WAMessageContent, contentType: keyof WAMessageContent): string[] => {
-  return get(content, ContenTypeMentionedJidPaths[contentType]);
+export const getContextInfo = (content: WAMessageContent, contentType: keyof WAMessageContent): WAContextInfo => {
+  return get(content, ContextInfoPaths[contentType]);
 }
 
 export const isCommandMessage = (text: string) => {
@@ -47,4 +47,16 @@ export const mimicMessage = (text: string): string => {
 export const removeMentionsFromText = (text: string, mentionedJids: string[]): string => {
   const mentionedNumbers = mentionedJids.map(jidToNumber);
   return mentionedNumbers.reduce((acc, jid) => acc.replace(new RegExp(`@${jid}`, 'g'), ''), text);
+}
+
+export const buildQuotedMessage = (contextInfo: WAContextInfo, groupJid: string): WAMessage => {
+  const message = normalizeMessageContent(contextInfo.quotedMessage);
+  return {
+    key: {
+      remoteJid: groupJid,
+      id: contextInfo.stanzaId,
+      participant: contextInfo.participant,
+    },
+    message,
+  }
 }

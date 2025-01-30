@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { GroupService } from '../../../group/services/group.service';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
-import { getMentionedJids } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 import { GroupMember } from '../../../group/models/group-member.model';
 import { CommandPayload } from '../../interfaces/command.interfaces';
+import { getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 
 @Injectable()
 export class MimicHandlerService {
@@ -31,7 +31,7 @@ export class MimicHandlerService {
       WaMessage,
     } = payload;
 
-    const mentionedJids = getMentionedJids(messageContent, messageType).filter(jid => jid !== client._userId);
+    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid.filter(jid => jid !== client._userId);
 
     if (!mentionedJids?.length) {
       client._wppSocket.sendMessage(

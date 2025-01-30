@@ -27,3 +27,17 @@ export const ContenTypeMentionedJidPaths = {
   [ValidMessageTypes.videoMessage]: 'videoMessage.contextInfo.mentionedJid',
   [ValidMessageTypes.documentMessage]: 'documentMessage.contextInfo.mentionedJid',
 } as const
+
+export const QuotedMessagePaths = {
+  [ValidMessageTypes.extendedTextMessage]: 'extendedTextMessage.contextInfo.quotedMessage',
+  [ValidMessageTypes.imageMessage]: 'imageMessage.contextInfo.quotedMessage',
+  [ValidMessageTypes.videoMessage]: 'videoMessage.contextInfo.quotedMessage',
+  [ValidMessageTypes.documentMessage]: 'documentMessage.contextInfo.quotedMessage',
+} as const
+
+export const ContextInfoPaths = {
+  [ValidMessageTypes.extendedTextMessage]: 'extendedTextMessage.contextInfo',
+  [ValidMessageTypes.imageMessage]: 'imageMessage.contextInfo',
+  [ValidMessageTypes.videoMessage]: 'videoMessage.contextInfo',
+  [ValidMessageTypes.documentMessage]: 'documentMessage.contextInfo',
+} as const

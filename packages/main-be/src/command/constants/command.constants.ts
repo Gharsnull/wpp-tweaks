@@ -7,5 +7,6 @@ export enum Commands {
   UNMUTE = 'unmute',
   HELP = 'help',
   MIMIC = 'mimic',
-  UNMIMIC = 'unmimic'
+  UNMIMIC = 'unmimic',
+  TAG_ALL = 'tagAll',
 };
