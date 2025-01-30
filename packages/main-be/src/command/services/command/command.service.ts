@@ -34,12 +34,13 @@ export class CommandService {
     } else if (commandGroupConfiguration.adminOnly) {
       const isAdmin = await this.isUserAdmin(senderJid, groupJid);
       const botAdmin = await this.isUserAdmin(client._userId, groupJid);
+      const isWhitelisted = commandGroupConfiguration.whiteList.includes(senderJid);
 
       if(!botAdmin) {
         error = 'I need admin role for this action :(';
       }
 
-      if(!isAdmin) {
+      if(!isAdmin && !isWhitelisted) {
         error = 'You do not have permission to use this command';
       }
     }
