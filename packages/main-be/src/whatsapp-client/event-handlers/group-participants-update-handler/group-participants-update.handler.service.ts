@@ -38,7 +38,7 @@ export class GroupParticipantsUpdateHandlerService {
       update.forEach(member => {
         this._logger.log(`Updating ${member.jid} admin status to ${member.isAdmin} in group ${member.groupJid}`);
       });
-      this._groupService.upsertGroupMembers(update);
+      await this._groupService.upsertGroupMembers(update);
       return;
     }
 
@@ -52,7 +52,7 @@ export class GroupParticipantsUpdateHandlerService {
         groupJid,
         active: false,
       })) as GroupMember[];
-      this._groupService.upsertGroupMembers(update);
+      await this._groupService.upsertGroupMembers(update);
       return;
     }
 
@@ -86,7 +86,7 @@ export class GroupParticipantsUpdateHandlerService {
           active: true,
         })) as GroupMember[];
         this._logger.log(`Adding ${membersToAdd.join(', ')} members to group ${groupJid}`);
-        this._groupService.upsertGroupMembers(update);
+        await this._groupService.upsertGroupMembers(update);
       }
 
       if (membersToRemove?.length) {
