@@ -12,7 +12,7 @@ const _msgRetryCounterCachce = new NodeCache();
 export const waLogger = P(
   {
     timestamp: () => `,"time":"${new Date().toJSON()}"`,
-    level: 'trace',
+    level: 'silent',
   },
   P.destination(whatsappConfig.loggerPath),
 );
