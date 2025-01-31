@@ -71,7 +71,6 @@ export class MuteHandlerService {
       jid,
       groupJid,
       muted: mute,
-      isAdmin: false,
     }));
 
     return this._groupService.upsertGroupMembers(members as GroupMember[]);
