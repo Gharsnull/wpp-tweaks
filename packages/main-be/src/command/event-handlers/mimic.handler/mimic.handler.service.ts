@@ -55,7 +55,6 @@ export class MimicHandlerService {
       jid,
       groupJid,
       mimic: mimic,
-      isAdmin: false,
     }));
 
     return this._groupService.upsertGroupMembers(members as GroupMember[]);
