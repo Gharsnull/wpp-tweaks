@@ -58,7 +58,7 @@ export class PurgeHandlerService implements CommandHandler {
           messagesCount: { $lt: minMessageCount },
           active: true,
           isAdmin: false,
-          // joinedAt: { $lte: monthAgo }
+          joinedAt: { $lte: monthAgo }
         }
       },
       {
