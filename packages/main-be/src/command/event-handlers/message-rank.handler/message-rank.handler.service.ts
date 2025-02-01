@@ -17,7 +17,7 @@ export class MessageRankHandlerService implements CommandHandler {
   async handle(payload: CommandPayload) {
     const { WaMessage, args, messageType, messageContent } = payload;
 
-    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid;
+    const mentionedJids = getContextInfo(messageContent, messageType)?.mentionedJid;
 
     if(!!args?.length && !mentionedJids?.length) {
       payload.client._wppSocket.sendMessage(
@@ -42,7 +42,7 @@ export class MessageRankHandlerService implements CommandHandler {
   private async getMentionedUsersRank(payload: CommandPayload) {
     const { groupJid, client, WaMessage, messageContent, messageType } = payload;
 
-    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid;
+    const mentionedJids = getContextInfo(messageContent, messageType)?.mentionedJid;
 
     const usersRanks = await Promise.all(mentionedJids.map((jid) => this.getUserPosition(groupJid, jid, client._userId)));
 

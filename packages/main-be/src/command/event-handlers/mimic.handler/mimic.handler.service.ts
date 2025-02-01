@@ -31,7 +31,7 @@ export class MimicHandlerService implements CommandHandler {
       WaMessage,
     } = payload;
 
-    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid.filter(jid => jid !== client._userId);
+    const mentionedJids = getContextInfo(messageContent, messageType)?.mentionedJid?.filter(jid => jid !== client._userId);
 
     if (!mentionedJids?.length) {
       client._wppSocket.sendMessage(

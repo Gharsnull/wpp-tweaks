@@ -26,6 +26,9 @@ export class GroupMember {
   @Prop({ default: 0 })
   messagesCount: number;
 
+  @Prop({ default: 0 })
+  totalMessagesCount: number;
+
   @Prop({ default: false })
   muted: boolean;
 
@@ -49,6 +52,7 @@ const _schema = SchemaFactory.createForClass(GroupMember);
 _schema.index({ groupJid: 1, jid: 1 }, { unique: true });
 _schema.index({ groupJid: 1, isAdmin: 1 });
 _schema.index({ groupJid: 1, messagesCount: -1 });
+_schema.index({ groupJid: 1, totalMessagesCount: -1 });
 _schema.index({ groupJid: 1, muted: 1 });
 _schema.index({ groupJid: 1, mimic: 1 });
 

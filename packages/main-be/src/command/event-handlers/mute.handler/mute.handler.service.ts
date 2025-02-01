@@ -31,11 +31,11 @@ export class MuteHandlerService implements CommandHandler {
       messageContent,
     } = payload;
 
-    const mentionedJids = getContextInfo(messageContent, messageType).mentionedJid.filter(jid => jid !== client._userId);
+    const mentionedJids = getContextInfo(messageContent, messageType)?.mentionedJid?.filter(jid => jid !== client._userId);
     const groupAdmins = await this._groupService.getGroupMembers(groupJid, true);
-    const filteredMentionedJids = mentionedJids.filter(jid => !groupAdmins.some(admin => admin.jid === jid));
+    const filteredMentionedJids = mentionedJids?.filter(jid => !groupAdmins.some(admin => admin.jid === jid));
 
-    if (filteredMentionedJids.length !== mentionedJids.length) {
+    if (filteredMentionedJids?.length !== mentionedJids?.length) {
       client._wppSocket.sendMessage(
         groupJid,
         { text: 'You cannot mute/unmute an admin.' },

@@ -15,7 +15,7 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
   },
   {
     name: 'msgTop',
-    adminOnly: false,
+    adminOnly: true,
     enabled: true,
     description: 'Show top 5 participants based on message count'
   },
@@ -67,5 +67,17 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     enabled: true,
     description: 'Ban last month inactive group members, check command settings for further configuration',
     settings: null,
+  },
+  {
+    name: 'totalMsgRank',
+    adminOnly: false,
+    enabled: true,
+    description: 'Show rank of the sender or the tagged participants based on total message count'
+  },
+  {
+    name: 'totalMsgTop',
+    adminOnly: true,
+    enabled: true,
+    description: 'Show top 5 participants based on total message count'
   }
 ]

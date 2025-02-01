@@ -11,10 +11,12 @@ import { HelpHandlerService } from './event-handlers/help.handler/help.handler.s
 import { MimicHandlerService } from './event-handlers/mimic.handler/mimic.handler.service';
 import { TagAllHandlerService } from './event-handlers/tag-all.handler/tag-all.handler.service';
 import { PurgeHandlerService } from './event-handlers/purge.handler/purge.handler.service';
+import { TotalMessageRankHandlerService } from './event-handlers/total-message-rank.handler/total-message-rank.handler.service';
+import { TotalMessageTopHandlerService } from './event-handlers/total-message-top.handler/total-message-top.handler.service';
 
 @Module({
   imports: [GroupConfigurationModule, GroupModule],
-  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService, MimicHandlerService, TagAllHandlerService, PurgeHandlerService],
+  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService, MimicHandlerService, TagAllHandlerService, PurgeHandlerService, TotalMessageRankHandlerService, TotalMessageTopHandlerService],
   exports: [CommandService],
 })
 export class CommandModule {}

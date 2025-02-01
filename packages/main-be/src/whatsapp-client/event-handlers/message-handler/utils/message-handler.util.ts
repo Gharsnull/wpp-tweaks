@@ -1,8 +1,8 @@
 import { getContentType, isJidGroup, normalizeMessageContent, WAContextInfo, WAMessage, WAMessageContent } from '@whiskeysockets/baileys';
-import { Commands } from '../../../../command/constants/command.constants';
-import { ContentTypeTextPaths, ContenTypeMentionedJidPaths, ContextInfoPaths, QuotedMessagePaths, ValidMessageTypes } from '../constants/message-handler.constants';
 import { get } from 'lodash';
+import { Commands } from '../../../../command/constants/command.constants';
 import { jidToNumber } from '../../../classes/utils/client-handler.utils';
+import { ContentTypeTextPaths, ContextInfoPaths, ValidMessageTypes } from '../constants/message-handler.constants';
 
 export const isGroupMessage = (message: WAMessage) => {
   return isJidGroup(message.key.remoteJid);

@@ -10,4 +10,6 @@ export enum Commands {
   UNMIMIC = 'unmimic',
   TAG_ALL = 'tagAll',
   PURGE = 'purge',
+  TOTAL_MSG_RANK = 'totalMsgRank',
+  TOTAL_MSG_TOP = 'totalMsgTop',
 };

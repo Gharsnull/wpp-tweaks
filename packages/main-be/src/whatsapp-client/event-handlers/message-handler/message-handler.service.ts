@@ -77,7 +77,7 @@ export class MessageHandlerService {
 
       if (messageText && member?.mimic) {
         let textToMimic = messageText;
-        const mentionedJids = getContextInfo(normalizedMessage, contentType).mentionedJid;
+        const mentionedJids = getContextInfo(normalizedMessage, contentType)?.mentionedJid;
 
         if (mentionedJids?.length) {
           textToMimic = removeMentionsFromText(messageText, mentionedJids);
