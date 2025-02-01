@@ -3,17 +3,17 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { GroupService } from '../../../group/services/group.service';
 import { jidToNumber } from '../../../whatsapp-client/classes/utils/client-handler.utils';
 import { Commands } from '../../constants/command.constants';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 import { UserPosition } from './interfaces/message-top.handler.interfaces';
 
 @Injectable()
-export class MessageTopHandlerService {
+export class MessageTopHandlerService implements CommandHandler {
   constructor(
     private readonly _groupService: GroupService,
   ) { }
 
   @OnEvent(Commands.MSG_TOP)
-  async handleMessageTop(payload: CommandPayload) {
+  async handle(payload: CommandPayload) {
     const { groupJid, client } = payload;
 
     const topMembers = await this.getTopMembers(groupJid, client._userId);

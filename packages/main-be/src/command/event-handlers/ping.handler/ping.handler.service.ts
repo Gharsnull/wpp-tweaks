@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 
 @Injectable()
-export class PingHandlerService {
+export class PingHandlerService implements CommandHandler {
   constructor() {}
 
   @OnEvent(Commands.PING)
-  handlePing(payload: CommandPayload) {
+  handle(payload: CommandPayload) {
     const {
       groupJid,
       WaMessage,

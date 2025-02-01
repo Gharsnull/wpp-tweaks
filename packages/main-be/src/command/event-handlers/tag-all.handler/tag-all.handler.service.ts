@@ -1,21 +1,21 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 import { buildQuotedMessage, getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 import { GroupService } from '../../../group/services/group.service';
 import { ClientHandler } from '../../../whatsapp-client/classes/client-handler';
 import { WAMessage } from '@whiskeysockets/baileys';
 
 @Injectable()
-export class TagAllHandlerService {
+export class TagAllHandlerService implements CommandHandler {
   private readonly _logger = new Logger(TagAllHandlerService.name);
   constructor(
     private readonly _groupService: GroupService,
   ) { }
 
   @OnEvent(Commands.TAG_ALL)
-  async handleTagAll(payload: CommandPayload): Promise<void> {
+  async handle(payload: CommandPayload): Promise<void> {
     const {
       groupJid,
       messageContent,

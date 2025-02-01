@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 import { getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 
 @Injectable()
-export class BanHandlerService {
+export class BanHandlerService implements CommandHandler {
   constructor() { }
 
   @OnEvent(Commands.BAN)
-  handleBan(payload: CommandPayload) {
+  handle(payload: CommandPayload) {
     const {
       groupJid,
       WaMessage,

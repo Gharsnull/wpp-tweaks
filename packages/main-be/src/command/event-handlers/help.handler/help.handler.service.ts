@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 import { GroupConfigurationService } from '../../../group-configuration/services/group-configuration/group-configuration.service';
 import { GroupService } from '../../../group/services/group.service';
 import { CommandConfigurations } from '../../../command-configuration/constants/command-configuration.constants';
 
 @Injectable()
-export class HelpHandlerService {
+export class HelpHandlerService implements CommandHandler {
   constructor(
     private readonly _groupConfigService: GroupConfigurationService,
     private readonly _groupService: GroupService,
   ) { }
 
   @OnEvent(Commands.HELP)
-  async handleHelp(payload: CommandPayload) {
+  async handle(payload: CommandPayload) {
     const { client, groupJid, WaMessage, senderJid } = payload;
 
     const queryResult = await this._groupConfigService.queryGroupConfiguration([{ $match: { groupJid } }]);

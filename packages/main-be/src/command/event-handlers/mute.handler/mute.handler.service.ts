@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { Commands } from '../../constants/command.constants';
 import { OnEvent } from '@nestjs/event-emitter';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 import { GroupService } from '../../../group/services/group.service';
 import { GroupMember } from '../../../group/models/group-member.model';
 import { getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 
 @Injectable()
-export class MuteHandlerService {
+export class MuteHandlerService implements CommandHandler {
   constructor(
     private readonly _groupService: GroupService,
   ) { }
 
   @OnEvent(Commands.MUTE)
-  handleMute(payload: CommandPayload) {
+  handle(payload: CommandPayload) {
     this.handleMuteUnmute(payload, true);
   }
 

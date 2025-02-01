@@ -3,17 +3,17 @@ import { GroupService } from '../../../group/services/group.service';
 import { OnEvent } from '@nestjs/event-emitter';
 import { Commands } from '../../constants/command.constants';
 import { GroupMember } from '../../../group/models/group-member.model';
-import { CommandPayload } from '../../interfaces/command.interfaces';
+import { CommandHandler, CommandPayload } from '../../interfaces/command.interfaces';
 import { getContextInfo } from '../../../whatsapp-client/event-handlers/message-handler/utils/message-handler.util';
 
 @Injectable()
-export class MimicHandlerService {
+export class MimicHandlerService implements CommandHandler {
   constructor(
     private readonly _groupService: GroupService
   ) { }
 
   @OnEvent(Commands.MIMIC)
-  handleMimic(payload: CommandPayload) {
+  handle(payload: CommandPayload) {
     this.handleMimicUnmimic(payload, true);
   }
 
