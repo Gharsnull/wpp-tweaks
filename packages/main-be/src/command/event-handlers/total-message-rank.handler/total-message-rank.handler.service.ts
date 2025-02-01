@@ -83,7 +83,7 @@ export class TotalMessageRankHandlerService implements CommandHandler {
       client._wppSocket.sendMessage(
         groupJid,
         {
-          text: `Your total rank is #${userRank.position} with ${userRank.totalMessagesCount} messages`,
+          text: `Your all time rank is #${userRank.position} with ${userRank.totalMessagesCount} messages`,
         },
         { quoted: WaMessage }
       );
