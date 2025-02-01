@@ -35,6 +35,9 @@ export class GroupMember {
   @Prop()
   lastMessageAt: Date;
 
+  @Prop({ type: Date, default: Date.now })
+  joinedAt: Date;
+
   @Prop()
   createdAt: Date;
 
@@ -43,10 +46,11 @@ export class GroupMember {
 }
 
 const _schema = SchemaFactory.createForClass(GroupMember);
-_schema.index({ group: 1, jid: 1 }, { unique: true });
-_schema.index({ group: 1, isAdmin: 1 });
-_schema.index({ group: 1, messagesCount: -1 });
-_schema.index({ group: 1, muted: 1 });
+_schema.index({ groupJid: 1, jid: 1 }, { unique: true });
+_schema.index({ groupJid: 1, isAdmin: 1 });
+_schema.index({ groupJid: 1, messagesCount: -1 });
+_schema.index({ groupJid: 1, muted: 1 });
+_schema.index({ groupJid: 1, mimic: 1 });
 
 export const groupMemberDefinition = {
   name: GroupMember.NAME,

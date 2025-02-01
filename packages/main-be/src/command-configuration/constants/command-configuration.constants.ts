@@ -60,5 +60,12 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: true,
     enabled: true,
     description: 'Tag all group members'
+  },
+  {
+    name: 'purge',
+    adminOnly: true,
+    enabled: true,
+    description: 'Ban last month inactive group members, check command settings for further configuration',
+    settings: null,
   }
 ]

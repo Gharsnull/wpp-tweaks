@@ -9,4 +9,5 @@ export enum Commands {
   MIMIC = 'mimic',
   UNMIMIC = 'unmimic',
   TAG_ALL = 'tagAll',
+  PURGE = 'purge',
 };

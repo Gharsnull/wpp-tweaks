@@ -84,6 +84,7 @@ export class GroupParticipantsUpdateHandlerService {
           groupJid,
           isAdmin: false,
           active: true,
+          joinedAt: new Date(),
         })) as GroupMember[];
         this._logger.log(`Adding ${membersToAdd.join(', ')} members to group ${groupJid}`);
         await this._groupService.upsertGroupMembers(update);

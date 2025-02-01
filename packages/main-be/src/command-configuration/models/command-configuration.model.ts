@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { SchemaTypes } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class CommandConfiguration {
@@ -18,6 +19,9 @@ export class CommandConfiguration {
 
   @Prop()
   enabled: boolean;
+
+  @Prop({ type: Object, of: SchemaTypes.Mixed, required: false})
+  settings?: Record<string, unknown>;
 
   @Prop()
   createdAt: Date;

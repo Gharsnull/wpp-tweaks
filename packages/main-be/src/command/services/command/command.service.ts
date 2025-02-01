@@ -50,6 +50,8 @@ export class CommandService {
       return;
     }
 
+    payload.commandConfiguration = commandGroupConfiguration;
+
     this._eventEmitter.emit(command, payload);
   }
 

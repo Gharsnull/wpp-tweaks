@@ -20,7 +20,7 @@ export class GroupHandlerService {
   async handleGroupUpsert(payload: WhatsappEventPayload<WhatsappEvents.GROUPS_UPSERT>): Promise<void> {
     const { event: groups } = payload;
 
-    groups?.forEach(async group => {
+  groups?.forEach(async group => {
       this._logger.log(`Upserting group ${group.subject}:${group.id}`);
       const groupPayoad: Partial<Group> = {
         jid: group.id,
