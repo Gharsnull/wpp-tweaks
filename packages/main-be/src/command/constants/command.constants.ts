@@ -12,4 +12,6 @@ export enum Commands {
   PURGE = 'purge',
   TOTAL_MSG_RANK = 'totalMsgRank',
   TOTAL_MSG_TOP = 'totalMsgTop',
+  RESET_MSG_COUNT = 'resetMsgCount',
+  RESET_ALL_MSG_COUNT = 'resetAllMsgCount'
 };

@@ -13,10 +13,11 @@ import { TagAllHandlerService } from './event-handlers/tag-all.handler/tag-all.h
 import { PurgeHandlerService } from './event-handlers/purge.handler/purge.handler.service';
 import { TotalMessageRankHandlerService } from './event-handlers/total-message-rank.handler/total-message-rank.handler.service';
 import { TotalMessageTopHandlerService } from './event-handlers/total-message-top.handler/total-message-top.handler.service';
+import { ResetMessageCountHandlerService } from './event-handlers/reset-message-count.handler/reset-message-count.handler.service';
 
 @Module({
   imports: [GroupConfigurationModule, GroupModule],
-  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService, MimicHandlerService, TagAllHandlerService, PurgeHandlerService, TotalMessageRankHandlerService, TotalMessageTopHandlerService],
+  providers: [PingHandlerService, CommandService, BanHandlerService, MessageTopHandlerService, MessageRankHandlerService, MuteHandlerService, HelpHandlerService, MimicHandlerService, TagAllHandlerService, PurgeHandlerService, TotalMessageRankHandlerService, TotalMessageTopHandlerService, ResetMessageCountHandlerService],
   exports: [CommandService],
 })
 export class CommandModule {}

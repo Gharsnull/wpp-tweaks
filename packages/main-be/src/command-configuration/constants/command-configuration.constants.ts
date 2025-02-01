@@ -79,5 +79,17 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: true,
     enabled: true,
     description: 'Show top 5 participants based on total message count'
+  },
+  {
+    name: 'resetMsgCount',
+    adminOnly: true,
+    enabled: true,
+    description: 'Reset message count of tagged users'
+  },
+  {
+    name: 'resetAllMsgCount',
+    adminOnly: true,
+    enabled: true,
+    description: 'Reset message count of all users'
   }
 ]
