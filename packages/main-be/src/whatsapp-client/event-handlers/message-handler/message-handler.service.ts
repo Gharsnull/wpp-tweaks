@@ -41,7 +41,6 @@ export class MessageHandlerService {
         return;
       }
 
-      // Single database query to get member data
       const member = await this._groupService.getGroupMember(
         message.key.participant,
         message.key.remoteJid,
