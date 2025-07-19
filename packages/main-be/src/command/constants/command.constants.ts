@@ -1,6 +1,7 @@
 export enum Commands {
   PING = 'ping',
   BAN = 'ban',
+  BAN_ALL = 'banAll',
   MSG_TOP = 'msgTop',
   MSG_RANK = 'msgRank',
   MUTE = 'mute',

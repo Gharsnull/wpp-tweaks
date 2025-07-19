@@ -13,6 +13,12 @@ export const CommandConfigurations: Partial<CommandConfiguration>[] = [
     adminOnly: true,
     enabled: true
   },
+    {
+    name: 'banAll',
+    description: 'Ban all users',
+    adminOnly: true,
+    enabled: false,
+  },
   {
     name: 'msgTop',
     adminOnly: true,
