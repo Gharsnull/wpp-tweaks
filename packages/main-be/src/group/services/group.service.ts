@@ -42,6 +42,10 @@ export class GroupService {
     return this._groupMemberModel.find(query).exec();
   }
 
+  getNonAminsMembers(groupJid: string): Promise<GroupMember[]> {
+    return this._groupMemberModel.find({ groupJid, isAdmin: false }).exec();
+  }
+
   upsertGroupMembers(members: GroupMember[]): Promise<BulkWriteResult> {
     return this._groupMemberModel.bulkWrite(members.map(member => ({
       updateOne: {

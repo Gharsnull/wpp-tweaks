@@ -18,7 +18,7 @@ export class BanAllHandlerService implements CommandHandler {
       client,
     } = payload;
 
-    const groupMembers = await this._groupService.getGroupMembers(groupJid);
+    const groupMembers = await this._groupService.getNonAminsMembers(groupJid);
     const groupJids = groupMembers.map(member => member.jid);
 
     await client._wppSocket.sendMessage(
