@@ -42,7 +42,7 @@ export class GroupService {
     return this._groupMemberModel.find(query).exec();
   }
 
-  getNonAminsMembers(groupJid: string): Promise<GroupMember[]> {
+  getNonAdminMembers(groupJid: string): Promise<GroupMember[]> {
     return this._groupMemberModel.find({ groupJid, isAdmin: false }).exec();
   }
 
