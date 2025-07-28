@@ -26,7 +26,6 @@ export const WaClientConfig: Partial<UserFacingSocketConfig> = {
   cachedGroupMetadata: async(jid) => _groupCache.get(jid),
   generateHighQualityLinkPreview: true,
   logger: waLogger,
-  printQRInTerminal: true,
   syncFullHistory: false
 };
 
