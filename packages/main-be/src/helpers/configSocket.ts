@@ -8,11 +8,9 @@ import {
   WAVersion,
 } from '@whiskeysockets/baileys';
 import pino from 'pino';
-import NodeCache from 'node-cache';
 
 export default function configSocket(
   state: AuthenticationState,
-  msgRetryCounterCache: NodeCache,
   version: WAVersion,
 ): UserFacingSocketConfig {
   return {
@@ -22,7 +20,6 @@ export default function configSocket(
       keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'info' })),
     },
     version,
-    msgRetryCounterCache,
     defaultQueryTimeoutMs: undefined,
     syncFullHistory: false,
     logger: pino({ level: 'info' }),

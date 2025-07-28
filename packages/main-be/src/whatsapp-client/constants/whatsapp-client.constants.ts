@@ -2,12 +2,13 @@ import {
   UserFacingSocketConfig,
   Browsers,
   BaileysEventMap,
+  GroupMetadata,
 } from '@whiskeysockets/baileys';
-import * as NodeCache from 'node-cache';
 import P from 'pino';
+import NodeCache from '@cacheable/node-cache'
 import whatsappConfig from '../../config/whatsapp.config';
 
-const _msgRetryCounterCachce = new NodeCache();
+const _groupCache = new NodeCache<GroupMetadata>();
 
 export const waLogger = P(
   {
@@ -21,8 +22,8 @@ export const WaClientConfig: Partial<UserFacingSocketConfig> = {
   connectTimeoutMs: 60 * 1000,
   qrTimeout: 120 * 1000,
   markOnlineOnConnect: true,
-  msgRetryCounterCache: _msgRetryCounterCachce,
   browser: Browsers.macOS('Desktop'),
+  cachedGroupMetadata: async(jid) => _groupCache.get(jid),
   generateHighQualityLinkPreview: true,
   logger: waLogger,
   printQRInTerminal: true,

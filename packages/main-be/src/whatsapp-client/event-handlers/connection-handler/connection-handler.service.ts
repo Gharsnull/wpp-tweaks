@@ -4,6 +4,7 @@ import { WhatsappEvents } from '../../constants/whatsapp-client.constants';
 import { WhatsappEventPayload } from '../../interfaces/whatsapp-client.interfaces';
 import { DisconnectReason } from '@whiskeysockets/baileys';
 import { Boom } from '@hapi/boom';
+import * as QRCode from 'qrcode';
 
 @Injectable()
 export class ConnectionHandlerService {
@@ -18,6 +19,7 @@ export class ConnectionHandlerService {
 
     if (qr) {
       this._logger.log('QR code received');
+      console.log(await QRCode.toString(qr, { type: 'terminal' }));
       return;
     }
 
