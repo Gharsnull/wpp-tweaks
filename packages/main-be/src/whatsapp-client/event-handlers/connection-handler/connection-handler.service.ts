@@ -22,6 +22,7 @@ export class ConnectionHandlerService {
     }
 
     if (connection === 'close') {
+      this._logger.log(`Connection closed: ${disconnectionError?.output?.statusCode}`);
       if (
         disconnectionError?.output?.statusCode !== DisconnectReason.loggedOut &&
         disconnectionError?.output?.statusCode !== DisconnectReason.connectionReplaced
