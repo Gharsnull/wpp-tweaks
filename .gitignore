@@ -6,3 +6,4 @@ baileys_store_multi.json
 wa-logs.txt
 
 .DS_Store
+/.vs
