@@ -36,13 +36,15 @@ export const parseCommand = (text: string): { command: Commands, args: string[] 
 }
 
 export const mimicMessage = (text: string): string => {
-  return text.replace(/[aeiouáéíóúAEIOUÁÉÍÓÚ]/g, match => {
+    return text.replace(/[aeiouáéíóúàäâãåąæāªèéëêęēėîįíïìīœøõóòöôūùûüúÁÉÍÓÚÀÄÂÃÅĄÆĀªÈÉËÊĘĒĖÎĮÍÏÌĪŒØÕÓÒÖÔŪÙÛÜÚº]/g, match => {
     const isUpperCase = match === match.toUpperCase();
-    const hasAccent = /[áéíóúÁÉÍÓÚ]/.test(match);
-    
-    return hasAccent ? (isUpperCase ? 'Í' : 'í') : (isUpperCase ? 'I' : 'i');
+        const accented = 'áéíóúàäâãåąæāªèéëêęēėîįíïìīœøõóòöôūùûüúÁÉÍÓÚÀÄÂÃÅĄÆĀªÈÉËÊĘĒĖÎĮÍÏÌĪŒØÕÓÒÖÔŪÙÛÜÚº';
+        return accented.includes(match)
+            ? (isUpperCase ? 'Í' : 'í')
+            : (isUpperCase ? 'I' : 'i');
   });
 }
+
 
 export const removeMentionsFromText = (text: string, mentionedJids: string[]): string => {
   const mentionedNumbers = mentionedJids.map(jidToNumber);
